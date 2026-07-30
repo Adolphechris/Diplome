@@ -13,251 +13,286 @@ body {
 }
 
 .page {
+    position: relative;
     box-sizing: border-box;
+    min-height: 275mm;
 }
 
-.legend-page {
+.page-break {
     page-break-before: always;
-    padding-top: 15px;
 }
 
-/* Header styling */
-.header-section {
+/* FILIGRANE ARRIÈRE-PLAN (WATERMARK VERSION ÉLECTRONIQUE) */
+.watermark-container {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
+    width: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.watermark-logo {
+    width: 340px;
+    height: 340px;
+    opacity: 0.18;
+    margin: 0 auto;
+    display: block;
+}
+
+.watermark-text {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 44pt;
+    font-weight: bold;
+    color: rgba(0, 80, 35, 0.22);
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    transform: rotate(-35deg);
+    margin-top: -180px;
+}
+
+/* BADGE VERSION ÉLECTRONIQUE */
+.e-transcript-header-badge {
+    background-color: #005023;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 5px 12px;
+    text-align: center;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    border-bottom: 3px solid #FFD700;
+}
+
+/* HEADER */
+.header-table {
+    width: 100%;
+    border-collapse: collapse;
     margin-bottom: 8px;
 }
 
+.header-logo-td {
+    width: 85px;
+    vertical-align: middle;
+    text-align: center;
+}
+
 .logo-img {
-    height: 60px;
-    width: auto;
-    display: block;
-    margin: 0 auto 4px auto;
+    width: 72px;
+    height: 72px;
 }
 
-.admin-block {
+.header-text-td {
     text-align: center;
-    font-size: 9pt;
+    vertical-align: middle;
+}
+
+.univ-name {
+    font-size: 14pt;
     font-weight: bold;
-    text-transform: uppercase;
-    line-height: 1.15;
-}
-
-.admin-block .univ-name {
-    font-size: 11.5pt;
-    letter-spacing: 0.5px;
-}
-
-.admin-block .contact-info {
-    font-size: 8pt;
-    font-weight: normal;
-    text-transform: none;
-    margin-top: 1px;
-}
-
-.doc-title {
-    font-size: 12pt;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    margin: 8px 0 8px 0;
     letter-spacing: 0.8px;
+    margin: 0;
+    color: #000000;
 }
 
-/* Student Bio Data */
-.bio-data {
+.office-title {
+    font-size: 9.5pt;
+    font-weight: bold;
+    margin: 2px 0 0 0;
+}
+
+.po-box {
+    font-size: 8.5pt;
+    margin: 1px 0 0 0;
+}
+
+.contact-info {
+    font-size: 7.5pt;
+    margin: 1px 0 0 0;
+}
+
+/* DOCUMENT TITLE */
+.doc-title {
+    text-align: center;
+    font-size: 13.5pt;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin: 10px 0 8px 0;
+    text-transform: uppercase;
+    border-bottom: 1px solid #000;
+    padding-bottom: 3px;
+}
+
+/* BIODATA PARAGRAPH */
+.biodata-p {
     text-align: justify;
     font-size: 9.5pt;
-    line-height: 1.3;
-    margin-bottom: 10px;
+    line-height: 1.35;
+    margin: 0 0 10px 0;
 }
 
-.student-name, .student-id, .student-session {
+.bold-field {
     font-weight: bold;
-    text-transform: uppercase;
 }
 
-/* Academic Performance Layout */
-.annual-block {
-    margin-bottom: 4px;
+/* ACADEMIC BLOCKS */
+.year-block {
+    margin-bottom: 8px;
 }
 
 .year-title {
-    font-weight: bold;
     font-size: 9.5pt;
+    font-weight: bold;
+    margin: 0 0 3px 0;
     text-transform: uppercase;
-    margin-bottom: 2px;
 }
 
-.course-table {
+.courses-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 2px;
-}
-
-.course-table td {
-    padding: 1px 0;
-    vertical-align: top;
     font-size: 9pt;
 }
 
+.courses-table td {
+    padding: 1.5px 0;
+    vertical-align: top;
+}
+
 .col-code {
-    width: 15%;
+    width: 18%;
     font-weight: normal;
 }
 
 .col-title {
     width: 72%;
-    text-align: left;
 }
 
 .col-grade {
-    width: 13%;
+    width: 10%;
     text-align: right;
     font-weight: bold;
-    padding-right: 8px;
 }
 
 .comment-line {
-    font-weight: bold;
     font-size: 9pt;
-    text-transform: uppercase;
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
-
-.divider-line {
-    border-top: 1px solid #000000;
-    margin: 2px 0 6px 0;
-}
-
-/* Graduation Statement */
-.graduation-statement {
     font-weight: bold;
+    margin: 3px 0 6px 0;
+    border-bottom: 0.5pt solid #444444;
+    padding-bottom: 2px;
+}
+
+/* CONFERMENT / GRADUATION STATEMENT */
+.graduation-statement {
+    margin: 10px 0 12px 0;
+    padding: 6px 8px;
+    border-top: 1.2pt solid #000;
+    border-bottom: 1.2pt solid #000;
     font-size: 9.5pt;
+    font-weight: bold;
     text-transform: uppercase;
-    line-height: 1.25;
-    margin: 8px 0 10px 0;
+    line-height: 1.3;
 }
 
-/* Validation, Signatures & Seal Zone */
-.validation-zone {
+/* SIGNATURES AND SEAL BLOCK */
+.signatures-table {
+    width: 100%;
     margin-top: 10px;
-    width: 100%;
-}
-
-.validation-table {
-    width: 100%;
     border-collapse: collapse;
 }
 
-.validation-table td {
+.signatures-table td {
     vertical-align: bottom;
-}
-
-.sig-cell {
-    width: 40%;
-    text-align: left;
-}
-
-.sig-img {
-    height: 35px;
-    width: auto;
-    margin-bottom: 2px;
-}
-
-.sig-title {
-    font-weight: bold;
-    font-size: 8.5pt;
-    text-transform: uppercase;
-    border-top: 1px solid #000;
-    display: inline-block;
-    padding-top: 2px;
-}
-
-.seal-cell {
-    width: 35%;
     text-align: center;
 }
 
-.seal-img {
-    height: 80px;
-    width: auto;
+.sig-col {
+    width: 36%;
+    text-align: left;
 }
 
-.seal-title {
-    font-weight: bold;
-    font-size: 8pt;
-    text-transform: uppercase;
-    margin-top: 2px;
+.seal-col {
+    width: 38%;
+    text-align: center;
 }
 
-.qr-cell {
-    width: 25%;
+.qr-col {
+    width: 26%;
     text-align: right;
 }
 
+.sig-img {
+    height: 45px;
+    margin-bottom: 2px;
+}
+
+.seal-img {
+    height: 85px;
+    margin-bottom: 2px;
+}
+
 .qr-img {
-    height: 70px;
-    width: 70px;
+    width: 90px;
+    height: 90px;
 }
 
-.qr-hash {
-    font-family: monospace;
-    font-size: 5.5pt;
-    color: #444;
-    margin-top: 1px;
-}
-
-/* Footer Legend */
-.footer-legend {
-    font-style: italic;
+.label-title {
     font-size: 8.5pt;
-    margin-top: 8px;
-    text-align: left;
+    font-weight: bold;
+    border-top: 1pt solid #000;
+    padding-top: 2px;
+    display: inline-block;
+    margin-top: 2px;
 }
 
-/* Reverse Side / Legend Page */
+.sha-text {
+    font-size: 6.5pt;
+    font-family: "Courier New", monospace;
+    color: #444444;
+    margin-top: 2px;
+}
+
+/* FOOTER NOTE */
+.footer-note {
+    font-size: 8.5pt;
+    font-style: italic;
+    margin-top: 10px;
+    border-top: 0.5pt solid #888888;
+    padding-top: 4px;
+}
+
+/* REVERSE SIDE - LEGEND */
 .legend-title {
-    font-weight: bold;
-    font-size: 11pt;
-    text-transform: uppercase;
     text-align: center;
-    margin-bottom: 25px;
-    letter-spacing: 0.5px;
+    font-size: 11pt;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-transform: uppercase;
 }
 
-.scale-table {
-    width: 80%;
-    margin: 0 auto 30px auto;
+.legend-table {
+    width: 85%;
+    margin: 0 auto;
     border-collapse: collapse;
-    font-size: 9.5pt;
-}
-
-.scale-table td {
-    padding: 4px 6px;
-    vertical-align: top;
-}
-
-.scale-range {
-    width: 25%;
-    font-weight: normal;
-}
-
-.scale-letter {
-    width: 15%;
-    font-weight: bold;
-}
-
-.scale-desc {
-    width: 60%;
-    text-transform: uppercase;
-}
-
-.security-note {
-    font-weight: bold;
     font-size: 9pt;
-    text-transform: uppercase;
-    margin: 50px 30px 0 30px;
+}
+
+.legend-table td {
+    padding: 4px 8px;
+}
+
+.legend-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.legend-notice {
+    width: 85%;
+    margin: 30px auto 0 auto;
+    font-size: 8.5pt;
+    font-weight: bold;
     text-align: justify;
-    line-height: 1.3;
 }

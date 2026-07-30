@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZAOU-GenDoc — Secrétariat du Sénat</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap");
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Inter", sans-serif; background: #0a1628; color: #e0e6f0; min-height: 100vh; }
+  
+  header {
+    background: linear-gradient(135deg, #005023 0%, #003016 50%, #001a0d 100%);
+    padding: 28px 40px;
+    display: flex; align-items: center; gap: 24px;
+    border-bottom: 3px solid #FFD700;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.5);
+  }
+  header img { width: 72px; height: 72px; border-radius: 50%; border: 2px solid #FFD700; }
+  header .title-block h1 { font-size: 22px; font-weight: 900; color: #fff; letter-spacing: 1px; }
+  header .title-block p { font-size: 11px; color: #FFD700; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+  header .badge {
+    margin-left: auto; background: #FFD700; color: #003016;
+    font-size: 11px; font-weight: 700; padding: 6px 16px; border-radius: 20px; letter-spacing: 1px;
+  }
+
+  .stats {
+    display: flex; gap: 20px; padding: 24px 40px;
+    background: #0e1f3a;
+    border-bottom: 1px solid #1e3a5f;
+  }
+  .stat-card {
+    flex: 1; background: linear-gradient(135deg, #152b4a, #0e1f3a);
+    border: 1px solid #1e3a5f; border-radius: 12px;
+    padding: 18px 22px; text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,80,35,0.3); }
+  .stat-card .number { font-size: 36px; font-weight: 900; color: #FFD700; }
+  .stat-card .label { font-size: 11px; color: #8ab0d0; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+  .toolbar {
+    padding: 18px 40px; display: flex; align-items: center; gap: 16px;
+    background: #0a1628;
+    border-bottom: 1px solid #1e3a5f;
+  }
+  .toolbar input {
+    flex: 1; background: #152b4a; border: 1px solid #1e3a5f; border-radius: 8px;
+    color: #e0e6f0; padding: 10px 16px; font-size: 14px; outline: none;
+  }
+  .toolbar input:focus { border-color: #FFD700; }
+  .toolbar select {
+    background: #152b4a; border: 1px solid #1e3a5f; border-radius: 8px;
+    color: #e0e6f0; padding: 10px 14px; font-size: 13px; outline: none; cursor: pointer;
+  }
+
+  .table-wrap { padding: 0 40px 40px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  thead tr { background: #005023; }
+  thead th { padding: 12px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #fff; }
+  tbody tr { border-bottom: 1px solid #1e3a5f; transition: background 0.15s; }
+  tbody tr:hover { background: #152b4a; }
+  tbody td { padding: 11px 14px; font-size: 13px; vertical-align: middle; }
+  tbody td:first-child { font-family: "Courier New", monospace; font-size: 12px; color: #8ab0d0; }
+  tbody td:nth-child(2) { font-weight: 600; color: #e0e6f0; }
+  .badge-mention {
+    display: inline-block; font-size: 10px; font-weight: 700; padding: 3px 10px;
+    border-radius: 12px; letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .DISTINCTION { background: rgba(255,215,0,0.15); color: #FFD700; border: 1px solid #FFD700; }
+  .MERIT { background: rgba(100,180,255,0.1); color: #64b4ff; border: 1px solid #64b4ff; }
+  .CREDIT { background: rgba(100,220,150,0.1); color: #64dc96; border: 1px solid #64dc96; }
+  a {
+    display: inline-block; padding: 5px 12px; border-radius: 6px;
+    font-size: 12px; font-weight: 600; text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  a:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+  .link-print { background: #152b4a; color: #8ab0d0; border: 1px solid #1e3a5f; }
+  .link-etrans { background: #005023; color: #FFD700; border: 1px solid #FFD700; }
+  .count-label { color: #8ab0d0; font-size: 13px; }
+  footer {
+    text-align: center; padding: 20px; background: #05101f;
+    font-size: 11px; color: #3a5a7a; border-top: 1px solid #1e3a5f;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <img src="assets/zaou_logo.png" alt="ZAOU Logo">
+  <div class="title-block">
+    <h1>ZAOU-GenDoc</h1>
+    <p>Secrétariat du Sénat — Zambian Open University</p>
+  </div>
+  <div class="badge">🔒 Système Sécurisé</div>
+</header>
+
+<div class="stats">
+  <div class="stat-card">
+    <div class="number">50</div>
+    <div class="label">Étudiants BIT 2012–2017</div>
+  </div>
+  <div class="stat-card">
+    <div class="number">50</div>
+    <div class="label">Relevés Imprimés Prêts</div>
+  </div>
+  <div class="stat-card">
+    <div class="number">50</div>
+    <div class="label">E-Transcripts Sécurisés</div>
+  </div>
+  <div class="stat-card">
+    <div class="number">100</div>
+    <div class="label">PDFs Générés au Total</div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <input type="text" id="searchInput" placeholder="🔍  Rechercher par nom, ID ou mention..." onkeyup="filterTable()">
+  <select id="mentionFilter" onchange="filterTable()">
+    <option value="">Toutes les mentions</option>
+    <option value="DISTINCTION">DISTINCTION</option>
+    <option value="MERIT">MERIT</option>
+    <option value="CREDIT">CREDIT</option>
+  </select>
+  <span class="count-label" id="countLabel">50 résultats</span>
+</div>
+
+<div class="table-wrap">
+<table id="studentsTable">
+  <thead>
+    <tr>
+      <th>N° Étudiant</th>
+      <th>Nom Complet</th>
+      <th>Mention</th>
+      <th>Relevé Officiel</th>
+      <th>E-Transcript</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody">
+
+    <tr>
+      <td>ZOU/2012/0482</td>
+      <td>MUKUKA MUTALE</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2012_0482_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2012_0482_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0119</td>
+      <td>CHISANGA BWALYA</td>
+      <td><span class="badge-mention MERIT">MERIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0119_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0119_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0534</td>
+      <td>PHIRI KONDWANI</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0534_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0534_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0004</td>
+      <td>SOKO KABWE</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0004_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0004_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0005</td>
+      <td>ZIMBA NATASHA</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0005_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0005_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0006</td>
+      <td>TEMBO THANDIWE</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0006_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0006_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0007</td>
+      <td>SIKAZWE CHIPO</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0007_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0007_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0008</td>
+      <td>MUSONDA NATASHA</td>
+      <td><span class="badge-mention MERIT">MERIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0008_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0008_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0009</td>
+      <td>MWALE KABWE</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0009_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0009_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0010</td>
+      <td>SIKAZWE KUNDA</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0010_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0010_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0011</td>
+      <td>TEMBO MWAMBA</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0011_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0011_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0012</td>
+      <td>NJOBVU KUNDA</td>
+      <td><span class="badge-mention MERIT">MERIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0012_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0012_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0013</td>
+      <td>KAPELE KUNDA</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0013_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0013_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0014</td>
+      <td>SAKALA LOMBE</td>
+      <td><span class="badge-mention MERIT">MERIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0014_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0014_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0015</td>
+      <td>LUNGI MAPALO</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0015_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0015_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0016</td>
+      <td>LUNGI KUNDA</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0016_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0016_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0017</td>
+      <td>NJOBVU CHIPO</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0017_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0017_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0018</td>
+      <td>MWALE KABWE</td>
+      <td><span class="badge-mention MERIT">MERIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0018_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0018_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0019</td>
+      <td>SIKAZWE KABWE</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0019_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0019_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0020</td>
+      <td>NJOBVU CHILESHE</td>
+      <td>SATISFACTORY</td>
+      <td><a href="output/pdfs/ZOU_2013_0020_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0020_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0021</td>
+      <td>SOKO MWAMBA</td>
+      <td>SATISFACTORY</td>
+      <td><a href="output/pdfs/ZOU_2013_0021_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0021_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0022</td>
+      <td>ZIMBA BUPE</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0022_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0022_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0023</td>
+      <td>NJOBVU CHIPO</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0023_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0023_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0024</td>
+      <td>SOKO NASON</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0024_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0024_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0025</td>
+      <td>MUSONDA MULENGA</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0025_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0025_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0026</td>
+      <td>LUNGI LOMBE</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0026_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0026_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0027</td>
+      <td>NJOBVU NATASHA</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0027_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0027_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0028</td>
+      <td>SIKAZWE MWAMBA</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0028_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0028_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0029</td>
+      <td>LUNGI KUNDA</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0029_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0029_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0030</td>
+      <td>SOKO KUNDA</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0030_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0030_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0031</td>
+      <td>NJOBVU MWAMBA</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0031_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0031_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0032</td>
+      <td>TEMBO KUNDA</td>
+      <td><span class="badge-mention MERIT">MERIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0032_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0032_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0033</td>
+      <td>SIKAZWE KUNDA</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0033_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0033_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0034</td>
+      <td>TEMBO KUNDA</td>
+      <td>SATISFACTORY</td>
+      <td><a href="output/pdfs/ZOU_2013_0034_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0034_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0035</td>
+      <td>KAPELE MULENGA</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0035_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0035_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0036</td>
+      <td>MUSONDA MAPALO</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0036_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0036_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0037</td>
+      <td>ZIMBA CHIPO</td>
+      <td>SATISFACTORY</td>
+      <td><a href="output/pdfs/ZOU_2013_0037_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0037_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0038</td>
+      <td>LUNGI CHILESHE</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0038_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0038_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0039</td>
+      <td>SOKO THANDIWE</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0039_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0039_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0040</td>
+      <td>KAPELE THANDIWE</td>
+      <td>SATISFACTORY</td>
+      <td><a href="output/pdfs/ZOU_2013_0040_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0040_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0041</td>
+      <td>NJOBVU BUPE</td>
+      <td><span class="badge-mention MERIT">MERIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0041_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0041_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0042</td>
+      <td>SOKO MWAMBA</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0042_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0042_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0043</td>
+      <td>SOKO NASON</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0043_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0043_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0044</td>
+      <td>NYIRENDA MWAMBA</td>
+      <td>SATISFACTORY</td>
+      <td><a href="output/pdfs/ZOU_2013_0044_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0044_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0045</td>
+      <td>MUSONDA KUNDA</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0045_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0045_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0046</td>
+      <td>SIKAZWE CHIPO</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0046_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0046_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0047</td>
+      <td>MWALE KUNDA</td>
+      <td>SATISFACTORY</td>
+      <td><a href="output/pdfs/ZOU_2013_0047_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0047_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0048</td>
+      <td>MWALE MWAMBA</td>
+      <td>SATISFACTORY</td>
+      <td><a href="output/pdfs/ZOU_2013_0048_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0048_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0049</td>
+      <td>NJOBVU BUPE</td>
+      <td><span class="badge-mention CREDIT">CREDIT</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0049_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0049_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+    <tr>
+      <td>ZOU/2013/0050</td>
+      <td>SOKO MULENGA</td>
+      <td><span class="badge-mention DISTINCTION">DISTINCTION</span></td>
+      <td><a href="output/pdfs/ZOU_2013_0050_BIT_TRANSCRIPT.pdf" target="_blank">📄 Relevé Imprimé</a></td>
+      <td><a href="output/etranscripts/ZOU_2013_0050_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<footer>
+  ZAOU-GenDoc · Office of the Deputy Registrar · Zambian Open University · Tous droits réservés
+</footer>
+
+<script>
+function filterTable() {
+  const search  = document.getElementById("searchInput").value.toLowerCase();
+  const mention = document.getElementById("mentionFilter").value.toUpperCase();
+  const rows    = document.querySelectorAll("#tableBody tr");
+  let count = 0;
+  rows.forEach(row => {
+    const text  = row.innerText.toLowerCase();
+    const badge = row.querySelector(".badge-mention")?.innerText || "";
+    const show  = text.includes(search) && (mention === "" || badge.includes(mention));
+    row.style.display = show ? "" : "none";
+    if (show) count++;
+  });
+  document.getElementById("countLabel").textContent = count + " résultat" + (count > 1 ? "s" : "");
+}
+</script>
+</body>
+</html>
