@@ -212,7 +212,7 @@ body {
 /* ── BLOC SCEAUX & SIGNATURES ──────────────────────────────── */
 .signatures-table {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 15px;
     border-collapse: collapse;
 }
 
@@ -226,7 +226,7 @@ body {
 .qr-col       { width: 33%; text-align: right;  vertical-align: bottom; }
 
 .sig-manual-space {
-    height: 48px;
+    height: 50px;
     width: 100%;
 }
 
@@ -243,11 +243,26 @@ body {
     color: #333333;
 }
 
+.sig-page-note {
+    font-size: 8pt;
+    font-weight: bold;
+    color: #444444;
+}
+
+.page-num-box {
+    font-size: 8pt;
+    font-weight: bold;
+    color: #333333;
+    border: 1px solid #666;
+    padding: 3px 6px;
+    display: inline-block;
+}
+
 /* Sceau humide bleu vif principal */
 .seal-wet-blue {
-    width: 130px;
+    width: 125px;
     height: auto;
-    max-height: 100px;
+    max-height: 95px;
     object-fit: contain;
 }
 
