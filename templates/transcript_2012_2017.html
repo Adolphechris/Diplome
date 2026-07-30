@@ -80,27 +80,22 @@
             {{ student.pronoun }} WAS AWARDED THE DEGREE OF {{ student.programme }} WITH {{ student.qualification_class }} AT THE GRADUATION CEREMONY HELD IN LUSAKA.
         </div>
 
-        <!-- BLOC LÉGALISATION SANS ÉCRITURES PARASITES SOUS LES SCEAUX -->
+        <!-- BLOC LÉGALISATION : SIGNATURE POUR SIGNER À LA MAIN, SCEAU BLEU OFFICIEL, CACHET DATE ROUGE + QR -->
         <table class="signatures-table">
             <tr>
-                <!-- COL 1 : Signature du Deputy Registrar (Dr. Chanda Mwape) -->
+                <!-- COL 1 : Espace libre pour signature manuscrite à la main + Nom du Registrar -->
                 <td class="sig-col">
-                    <img class="sig-img" src="{{ sig_path }}" alt="Signature Dr. Chanda Mwape"><br>
+                    <div class="sig-manual-space"></div>
                     <div class="sig-name">Dr. Chanda Mwape</div>
                     <div class="sig-title">DEPUTY REGISTRAR (ACADEMIC)</div>
                 </td>
 
-                <!-- COL 2 : Sceau principal humide bleu vif avec Logo ZAOU au centre -->
+                <!-- COL 2 : Sceau officiel principal en encre bleue -->
                 <td class="seal-wet-col">
-                    <img class="seal-wet-blue" src="{{ seal_wet_path }}" alt="Official Wet Seal">
+                    <img class="seal-wet-blue" src="{{ seal_wet_path }}" alt="Official University Seal">
                 </td>
 
-                <!-- COL 3 : Sceau sec gaufré distinct avec Logo ZAOU -->
-                <td class="seal-dry-col">
-                    <img class="seal-dry" src="{{ seal_dry_path }}" alt="Official Dry Seal">
-                </td>
-
-                <!-- COL 4 : Cachet date rouge + QR Code -->
+                <!-- COL 3 : Cachet de datation rouge + QR Code de vérification -->
                 <td class="qr-col">
                     <img class="seal-date-red" src="{{ seal_date_path }}" alt="Date Stamp"><br>
                     <img class="qr-img" src="{{ qr_data_uri }}" alt="Verification QR Code"><br>
