@@ -27,7 +27,6 @@
 
     body { font-family: "Inter", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-    /* ── HERO HEADER ── */
     .hero {
       background: linear-gradient(135deg, var(--green-dark) 0%, #001a0d 60%, #020d18 100%);
       border-bottom: 3px solid var(--gold);
@@ -48,7 +47,6 @@
     .hero-badge .pill { background: var(--gold); color: var(--green-dark); font-size: 11px; font-weight: 800; padding: 6px 18px; border-radius: 20px; letter-spacing: 1px; display: inline-block; }
     .hero-badge .updated { font-size: 10px; color: var(--text-dim); margin-top: 6px; }
 
-    /* ── STATS ── */
     .stats-bar {
       background: var(--bg2); border-bottom: 1px solid var(--border);
       display: flex; gap: 0; padding: 0;
@@ -63,7 +61,6 @@
     .stat .n { font-size: 32px; font-weight: 900; color: var(--gold); }
     .stat .l { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.2px; margin-top: 3px; }
 
-    /* ── TOOLBAR ── */
     .toolbar {
       background: var(--bg); border-bottom: 1px solid var(--border);
       padding: 16px 48px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
@@ -78,7 +75,6 @@
     .toolbar select { cursor: pointer; }
     .toolbar .count { font-size: 13px; color: var(--text-dim); margin-left: auto; white-space: nowrap; }
 
-    /* ── TABLE ── */
     .table-wrap { padding: 24px 48px 60px; overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; min-width: 780px; }
     thead tr { background: linear-gradient(90deg, var(--green-mid), var(--green-dark)); }
@@ -91,24 +87,20 @@
     td.name { font-weight: 600; color: #fff; }
     td.center { text-align: center; }
 
-    /* ── BADGES ── */
     .badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 3px 11px; border-radius: 14px; letter-spacing: .5px; text-transform: uppercase; }
     .badge-DISTINCTION { background: rgba(255,215,0,.12); color: var(--gold); border: 1px solid var(--gold); }
     .badge-MERIT       { background: rgba(100,180,255,.1); color: #64b4ff; border: 1px solid #64b4ff; }
     .badge-CREDIT      { background: rgba(100,220,150,.1); color: #64dc96; border: 1px solid #64dc96; }
 
-    /* ── BUTTONS ── */
     .btn { display: inline-block; padding: 5px 13px; border-radius: 7px; font-size: 11.5px; font-weight: 600; text-decoration: none; margin: 2px; transition: transform .15s, box-shadow .15s, opacity .15s; }
     .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 16px rgba(0,0,0,.45); opacity: .9; }
     .btn-print  { background: var(--bg3); color: var(--text-dim); border: 1px solid var(--border); }
     .btn-etrans { background: var(--green-mid); color: var(--gold); border: 1px solid var(--gold); }
 
-    /* ── FOOTER ── */
     footer { background: #05101f; border-top: 1px solid var(--border); text-align: center; padding: 22px; font-size: 11px; color: #2a4a6a; letter-spacing: 1px; }
     footer a { color: var(--text-dim); text-decoration: none; }
     footer a:hover { color: var(--gold); }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
       .hero { flex-wrap: wrap; padding: 24px 20px; }
       .hero-badge { margin-left: 0; }
@@ -134,10 +126,10 @@
 </header>
 
 <div class="stats-bar">
-  <div class="stat"><div class="n">50</div><div class="l">Étudiants BIT</div></div>
-  <div class="stat"><div class="n">50</div><div class="l">Relevés Imprimés</div></div>
-  <div class="stat"><div class="n">50</div><div class="l">E-Transcripts</div></div>
-  <div class="stat"><div class="n">100</div><div class="l">PDFs Sécurisés</div></div>
+  <div class="stat"><div class="n">51</div><div class="l">Étudiants BIT</div></div>
+  <div class="stat"><div class="n">51</div><div class="l">Relevés Imprimés</div></div>
+  <div class="stat"><div class="n">51</div><div class="l">E-Transcripts</div></div>
+  <div class="stat"><div class="n">102</div><div class="l">PDFs Sécurisés</div></div>
   <div class="stat"><div class="n">SHA-256</div><div class="l">Empreinte Cryptographique</div></div>
 </div>
 
@@ -149,7 +141,7 @@
     <option value="MERIT">MERIT</option>
     <option value="CREDIT">CREDIT</option>
   </select>
-  <span class="count" id="cnt">50 étudiants</span>
+  <span class="count" id="cnt">51 étudiants</span>
 </div>
 
 <div class="table-wrap">
@@ -662,6 +654,16 @@
       <td class="center">
         <a class="btn btn-print" href="output/pdfs/ZOU_2013_0050_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
         <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0050_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2012/0501</td>
+      <td class="name">MUKENDI KALONJI ADOLPHE</td>
+      <td><span class="badge badge-MERIT">MERIT</span></td>
+      <td class="center">3.52</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2012_0501_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2012_0501_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
       </td>
     </tr>
 
