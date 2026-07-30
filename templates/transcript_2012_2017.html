@@ -80,25 +80,24 @@
             {{ student.pronoun }} WAS AWARDED THE DEGREE OF {{ student.programme }} WITH {{ student.qualification_class }} AT THE GRADUATION CEREMONY HELD IN LUSAKA.
         </div>
 
-        <!-- BLOC LÉGALISATION : 4 ÉLÉMENTS SÉPARÉS (SIGNATURE, SCEAU BLEU HUMIDE, SCEAU SEC GAUFRÉ, CACHET ROUGE + QR) -->
+        <!-- BLOC LÉGALISATION SANS ÉCRITURES PARASITES SOUS LES SCEAUX -->
         <table class="signatures-table">
             <tr>
-                <!-- COL 1 : Signature du Deputy Registrar -->
+                <!-- COL 1 : Signature du Deputy Registrar (Dr. Chanda Mwape) -->
                 <td class="sig-col">
-                    <img class="sig-img" src="{{ sig_path }}" alt="Signature Deputy Registrar"><br>
-                    <span class="label-title">DEPUTY REGISTRAR(ACADEMIC)</span>
+                    <img class="sig-img" src="{{ sig_path }}" alt="Signature Dr. Chanda Mwape"><br>
+                    <div class="sig-name">Dr. Chanda Mwape</div>
+                    <div class="sig-title">DEPUTY REGISTRAR (ACADEMIC)</div>
                 </td>
 
-                <!-- COL 2 : Sceau principal humide bleu vif Facebook (distinct) -->
+                <!-- COL 2 : Sceau principal humide bleu vif avec Logo ZAOU au centre -->
                 <td class="seal-wet-col">
-                    <img class="seal-wet-blue" src="{{ seal_wet_path }}" alt="University Seal – Facebook Blue Ink"><br>
-                    <span class="label-title">OFFICIAL WET SEAL</span>
+                    <img class="seal-wet-blue" src="{{ seal_wet_path }}" alt="Official Wet Seal">
                 </td>
 
-                <!-- COL 3 : Sceau sec gaufré (distinct, à côté et non superposé) -->
+                <!-- COL 3 : Sceau sec gaufré distinct avec Logo ZAOU -->
                 <td class="seal-dry-col">
-                    <img class="seal-dry" src="{{ seal_dry_path }}" alt="University Dry Seal"><br>
-                    <span class="label-title">EMBOSSED DRY SEAL</span>
+                    <img class="seal-dry" src="{{ seal_dry_path }}" alt="Official Dry Seal">
                 </td>
 
                 <!-- COL 4 : Cachet date rouge + QR Code -->
