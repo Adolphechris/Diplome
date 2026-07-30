@@ -1,16 +1,5 @@
 [
   {
-    "student_id": "ZOU/2012/0482",
-    "full_name": "MUKUKA MUTALE",
-    "programme": "BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY",
-    "gpa": 3.92,
-    "qualification_class": "DISTINCTION",
-    "pdf_filename": "ZOU_2012_0482_BIT_TRANSCRIPT.pdf",
-    "sha256_hash": "d39e2f54c164265df22904bb13468a7f89fdb9d41b512e76fdb53ccdd821cee6",
-    "issued_at": "2026-07-30 17:07:39 UTC",
-    "authority": "Office of the Senate Secretariat - Zambian Open University"
-  },
-  {
     "student_id": "ZOU/2013/0119",
     "full_name": "CHISANGA BWALYA",
     "programme": "BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY",
@@ -18,17 +7,6 @@
     "qualification_class": "MERIT",
     "pdf_filename": "ZOU_2013_0119_BIT_TRANSCRIPT.pdf",
     "sha256_hash": "20ed70964843a52d2e31e3fe3f67158a457e8b114b25eaa5c44629772cf9fef2",
-    "issued_at": "2026-07-30 17:07:40 UTC",
-    "authority": "Office of the Senate Secretariat - Zambian Open University"
-  },
-  {
-    "student_id": "ZOU/2013/0534",
-    "full_name": "PHIRI KONDWANI",
-    "programme": "BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY",
-    "gpa": 2.73,
-    "qualification_class": "CREDIT",
-    "pdf_filename": "ZOU_2013_0534_BIT_TRANSCRIPT.pdf",
-    "sha256_hash": "2d7bbe25571bc04e783d31587919788039815686741d2c3e3388a2cd33cf990e",
     "issued_at": "2026-07-30 17:07:40 UTC",
     "authority": "Office of the Senate Secretariat - Zambian Open University"
   },
@@ -547,6 +525,28 @@
     "pdf_filename": "ZOU_2013_0050_BIT_TRANSCRIPT.pdf",
     "sha256_hash": "86d47ded47d2a92fdcffd75712cd7f72145a37b23f463ee577e50d4306127d3c",
     "issued_at": "2026-07-30 17:08:10 UTC",
+    "authority": "Office of the Senate Secretariat - Zambian Open University"
+  },
+  {
+    "student_id": "ZOU/2012/0482",
+    "full_name": "MUKUKA MUTALE",
+    "programme": "BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY",
+    "gpa": 3.92,
+    "qualification_class": "DISTINCTION",
+    "pdf_filename": "ZOU_2012_0482_BIT_TRANSCRIPT.pdf",
+    "sha256_hash": "fd3ad006b79bd0a2f228aa61d660e40bb30a2a484d135c4ec9043429d64d619f",
+    "issued_at": "2026-07-30 17:26:02 UTC",
+    "authority": "Office of the Senate Secretariat - Zambian Open University"
+  },
+  {
+    "student_id": "ZOU/2013/0534",
+    "full_name": "PHIRI KONDWANI",
+    "programme": "BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY",
+    "gpa": 2.73,
+    "qualification_class": "CREDIT",
+    "pdf_filename": "ZOU_2013_0534_BIT_TRANSCRIPT.pdf",
+    "sha256_hash": "297d0e7539b5b0a2ad21e59d7b6f9572595a7a2f6b8030f1afd9480bd443e49e",
+    "issued_at": "2026-07-30 17:27:26 UTC",
     "authority": "Office of the Senate Secretariat - Zambian Open University"
   }
 ]
