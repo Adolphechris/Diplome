@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Système officiel de génération des relevés de notes sécurisés - Zambian Open University, Secrétariat du Sénat">
+  <title>ZAOU-GenDoc — Secrétariat du Sénat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:   #003a16;
+      --green-mid:    #005023;
+      --green-light:  #007a38;
+      --gold:         #FFD700;
+      --gold-dim:     #c9a800;
+      --bg:           #08111f;
+      --bg2:          #0d1c30;
+      --bg3:          #122540;
+      --border:       #1a3050;
+      --text:         #dde8f5;
+      --text-dim:     #7a9fc0;
+      --mono:         "Courier New", monospace;
+    }
+
+    body { font-family: "Inter", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* ── HERO HEADER ── */
+    .hero {
+      background: linear-gradient(135deg, var(--green-dark) 0%, #001a0d 60%, #020d18 100%);
+      border-bottom: 3px solid var(--gold);
+      padding: 36px 48px 32px;
+      display: flex; align-items: center; gap: 28px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(0,120,56,0.18) 0%, transparent 65%);
+    }
+    .hero-logo { width: 80px; height: 80px; border-radius: 50%; border: 2.5px solid var(--gold); object-fit: cover; flex-shrink: 0; position: relative; z-index: 1; }
+    .hero-text { position: relative; z-index: 1; }
+    .hero-text h1 { font-size: 26px; font-weight: 900; color: #fff; letter-spacing: 1.5px; }
+    .hero-text .subtitle { font-size: 12px; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-top: 5px; }
+    .hero-text .desc { font-size: 13px; color: var(--text-dim); margin-top: 8px; max-width: 520px; }
+    .hero-badge { margin-left: auto; position: relative; z-index: 1; text-align: right; }
+    .hero-badge .pill { background: var(--gold); color: var(--green-dark); font-size: 11px; font-weight: 800; padding: 6px 18px; border-radius: 20px; letter-spacing: 1px; display: inline-block; }
+    .hero-badge .updated { font-size: 10px; color: var(--text-dim); margin-top: 6px; }
+
+    /* ── STATS ── */
+    .stats-bar {
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      display: flex; gap: 0; padding: 0;
+    }
+    .stat {
+      flex: 1; padding: 20px 24px; text-align: center;
+      border-right: 1px solid var(--border);
+      transition: background .2s;
+    }
+    .stat:last-child { border-right: none; }
+    .stat:hover { background: var(--bg3); }
+    .stat .n { font-size: 32px; font-weight: 900; color: var(--gold); }
+    .stat .l { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.2px; margin-top: 3px; }
+
+    /* ── TOOLBAR ── */
+    .toolbar {
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 16px 48px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    }
+    .toolbar input, .toolbar select {
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text); padding: 10px 16px; font-size: 13.5px; outline: none;
+      font-family: inherit;
+    }
+    .toolbar input { flex: 1; min-width: 240px; }
+    .toolbar input:focus, .toolbar select:focus { border-color: var(--gold); }
+    .toolbar select { cursor: pointer; }
+    .toolbar .count { font-size: 13px; color: var(--text-dim); margin-left: auto; white-space: nowrap; }
+
+    /* ── TABLE ── */
+    .table-wrap { padding: 24px 48px 60px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 780px; }
+    thead tr { background: linear-gradient(90deg, var(--green-mid), var(--green-dark)); }
+    thead th { padding: 13px 16px; text-align: left; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #fff; }
+    thead th.center { text-align: center; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+    tbody tr:hover { background: var(--bg3); }
+    tbody td { padding: 11px 16px; font-size: 13px; vertical-align: middle; }
+    td.mono { font-family: var(--mono); font-size: 11.5px; color: var(--text-dim); }
+    td.name { font-weight: 600; color: #fff; }
+    td.center { text-align: center; }
+
+    /* ── BADGES ── */
+    .badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 3px 11px; border-radius: 14px; letter-spacing: .5px; text-transform: uppercase; }
+    .badge-DISTINCTION { background: rgba(255,215,0,.12); color: var(--gold); border: 1px solid var(--gold); }
+    .badge-MERIT       { background: rgba(100,180,255,.1); color: #64b4ff; border: 1px solid #64b4ff; }
+    .badge-CREDIT      { background: rgba(100,220,150,.1); color: #64dc96; border: 1px solid #64dc96; }
+
+    /* ── BUTTONS ── */
+    .btn { display: inline-block; padding: 5px 13px; border-radius: 7px; font-size: 11.5px; font-weight: 600; text-decoration: none; margin: 2px; transition: transform .15s, box-shadow .15s, opacity .15s; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 16px rgba(0,0,0,.45); opacity: .9; }
+    .btn-print  { background: var(--bg3); color: var(--text-dim); border: 1px solid var(--border); }
+    .btn-etrans { background: var(--green-mid); color: var(--gold); border: 1px solid var(--gold); }
+
+    /* ── FOOTER ── */
+    footer { background: #05101f; border-top: 1px solid var(--border); text-align: center; padding: 22px; font-size: 11px; color: #2a4a6a; letter-spacing: 1px; }
+    footer a { color: var(--text-dim); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .hero { flex-wrap: wrap; padding: 24px 20px; }
+      .hero-badge { margin-left: 0; }
+      .toolbar, .table-wrap { padding-left: 16px; padding-right: 16px; }
+      .stats-bar { flex-wrap: wrap; }
+      .stat { min-width: 48%; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <img class="hero-logo" src="assets/zaou_logo.png" alt="ZAOU">
+  <div class="hero-text">
+    <h1>ZAOU-GenDoc</h1>
+    <div class="subtitle">Secrétariat du Sénat — Zambian Open University</div>
+    <div class="desc">Système officiel de génération et de vérification des relevés de notes sécurisés — Programme BIT 2012–2017</div>
+  </div>
+  <div class="hero-badge">
+    <div class="pill">🔒 Système Sécurisé</div>
+    <div class="updated">GitHub Pages · En ligne 24h/24</div>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="stat"><div class="n">50</div><div class="l">Étudiants BIT</div></div>
+  <div class="stat"><div class="n">50</div><div class="l">Relevés Imprimés</div></div>
+  <div class="stat"><div class="n">50</div><div class="l">E-Transcripts</div></div>
+  <div class="stat"><div class="n">100</div><div class="l">PDFs Sécurisés</div></div>
+  <div class="stat"><div class="n">SHA-256</div><div class="l">Empreinte Cryptographique</div></div>
+</div>
+
+<div class="toolbar">
+  <input type="text" id="q" placeholder="🔍  Rechercher par nom, numéro étudiant ou mention..." oninput="filter()">
+  <select id="m" onchange="filter()">
+    <option value="">Toutes les mentions</option>
+    <option value="DISTINCTION">DISTINCTION</option>
+    <option value="MERIT">MERIT</option>
+    <option value="CREDIT">CREDIT</option>
+  </select>
+  <span class="count" id="cnt">50 étudiants</span>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>N° Étudiant</th>
+        <th>Nom Complet</th>
+        <th>Mention</th>
+        <th class="center">GPA</th>
+        <th class="center">Documents Officiels</th>
+      </tr>
+    </thead>
+    <tbody id="tb">
+    <tr>
+      <td class="mono">ZOU/2012/0482</td>
+      <td class="name">MUKUKA MUTALE</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.92</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2012_0482_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2012_0482_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0119</td>
+      <td class="name">CHISANGA BWALYA</td>
+      <td><span class="badge badge-MERIT">MERIT</span></td>
+      <td class="center">3.35</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0119_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0119_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0534</td>
+      <td class="name">PHIRI KONDWANI</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.73</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0534_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0534_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0004</td>
+      <td class="name">SOKO KABWE</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.96</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0004_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0004_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0005</td>
+      <td class="name">ZIMBA NATASHA</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.81</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0005_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0005_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0006</td>
+      <td class="name">TEMBO THANDIWE</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.85</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0006_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0006_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0007</td>
+      <td class="name">SIKAZWE CHIPO</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.9</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0007_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0007_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0008</td>
+      <td class="name">MUSONDA NATASHA</td>
+      <td><span class="badge badge-MERIT">MERIT</span></td>
+      <td class="center">3.04</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0008_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0008_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0009</td>
+      <td class="name">MWALE KABWE</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.75</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0009_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0009_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0010</td>
+      <td class="name">SIKAZWE KUNDA</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.79</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0010_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0010_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0011</td>
+      <td class="name">TEMBO MWAMBA</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.9</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0011_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0011_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0012</td>
+      <td class="name">NJOBVU KUNDA</td>
+      <td><span class="badge badge-MERIT">MERIT</span></td>
+      <td class="center">3.29</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0012_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0012_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0013</td>
+      <td class="name">KAPELE KUNDA</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.81</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0013_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0013_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0014</td>
+      <td class="name">SAKALA LOMBE</td>
+      <td><span class="badge badge-MERIT">MERIT</span></td>
+      <td class="center">3.23</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0014_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0014_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0015</td>
+      <td class="name">LUNGI MAPALO</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.96</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0015_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0015_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0016</td>
+      <td class="name">LUNGI KUNDA</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.94</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0016_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0016_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0017</td>
+      <td class="name">NJOBVU CHIPO</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.58</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0017_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0017_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0018</td>
+      <td class="name">MWALE KABWE</td>
+      <td><span class="badge badge-MERIT">MERIT</span></td>
+      <td class="center">3.29</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0018_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0018_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0019</td>
+      <td class="name">SIKAZWE KABWE</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.88</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0019_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0019_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0020</td>
+      <td class="name">NJOBVU CHILESHE</td>
+      <td><span class="badge badge-SATISFACTORY">SATISFACTORY</span></td>
+      <td class="center">2.42</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0020_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0020_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0021</td>
+      <td class="name">SOKO MWAMBA</td>
+      <td><span class="badge badge-SATISFACTORY">SATISFACTORY</span></td>
+      <td class="center">2.48</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0021_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0021_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0022</td>
+      <td class="name">ZIMBA BUPE</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.9</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0022_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0022_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0023</td>
+      <td class="name">NJOBVU CHIPO</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.98</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0023_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0023_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0024</td>
+      <td class="name">SOKO NASON</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.6</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0024_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0024_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0025</td>
+      <td class="name">MUSONDA MULENGA</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.92</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0025_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0025_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0026</td>
+      <td class="name">LUNGI LOMBE</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.73</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0026_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0026_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0027</td>
+      <td class="name">NJOBVU NATASHA</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.83</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0027_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0027_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0028</td>
+      <td class="name">SIKAZWE MWAMBA</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.9</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0028_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0028_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0029</td>
+      <td class="name">LUNGI KUNDA</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.73</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0029_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0029_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0030</td>
+      <td class="name">SOKO KUNDA</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.6</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0030_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0030_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0031</td>
+      <td class="name">NJOBVU MWAMBA</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.62</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0031_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0031_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0032</td>
+      <td class="name">TEMBO KUNDA</td>
+      <td><span class="badge badge-MERIT">MERIT</span></td>
+      <td class="center">3.06</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0032_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0032_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0033</td>
+      <td class="name">SIKAZWE KUNDA</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.92</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0033_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0033_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0034</td>
+      <td class="name">TEMBO KUNDA</td>
+      <td><span class="badge badge-SATISFACTORY">SATISFACTORY</span></td>
+      <td class="center">2.46</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0034_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0034_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0035</td>
+      <td class="name">KAPELE MULENGA</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.71</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0035_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0035_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0036</td>
+      <td class="name">MUSONDA MAPALO</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.9</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0036_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0036_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0037</td>
+      <td class="name">ZIMBA CHIPO</td>
+      <td><span class="badge badge-SATISFACTORY">SATISFACTORY</span></td>
+      <td class="center">2.46</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0037_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0037_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0038</td>
+      <td class="name">LUNGI CHILESHE</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.92</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0038_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0038_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0039</td>
+      <td class="name">SOKO THANDIWE</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.88</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0039_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0039_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0040</td>
+      <td class="name">KAPELE THANDIWE</td>
+      <td><span class="badge badge-SATISFACTORY">SATISFACTORY</span></td>
+      <td class="center">2.4</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0040_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0040_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0041</td>
+      <td class="name">NJOBVU BUPE</td>
+      <td><span class="badge badge-MERIT">MERIT</span></td>
+      <td class="center">3.19</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0041_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0041_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0042</td>
+      <td class="name">SOKO MWAMBA</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.62</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0042_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0042_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0043</td>
+      <td class="name">SOKO NASON</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.96</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0043_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0043_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0044</td>
+      <td class="name">NYIRENDA MWAMBA</td>
+      <td><span class="badge badge-SATISFACTORY">SATISFACTORY</span></td>
+      <td class="center">2.35</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0044_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0044_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0045</td>
+      <td class="name">MUSONDA KUNDA</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.9</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0045_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0045_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0046</td>
+      <td class="name">SIKAZWE CHIPO</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.81</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0046_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0046_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0047</td>
+      <td class="name">MWALE KUNDA</td>
+      <td><span class="badge badge-SATISFACTORY">SATISFACTORY</span></td>
+      <td class="center">2.4</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0047_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0047_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0048</td>
+      <td class="name">MWALE MWAMBA</td>
+      <td><span class="badge badge-SATISFACTORY">SATISFACTORY</span></td>
+      <td class="center">2.35</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0048_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0048_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0049</td>
+      <td class="name">NJOBVU BUPE</td>
+      <td><span class="badge badge-CREDIT">CREDIT</span></td>
+      <td class="center">2.58</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0049_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0049_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="mono">ZOU/2013/0050</td>
+      <td class="name">SOKO MULENGA</td>
+      <td><span class="badge badge-DISTINCTION">DISTINCTION</span></td>
+      <td class="center">3.94</td>
+      <td class="center">
+        <a class="btn btn-print" href="output/pdfs/ZOU_2013_0050_BIT_TRANSCRIPT.pdf" target="_blank">📄 Imprimé</a>
+        <a class="btn btn-etrans" href="output/etranscripts/ZOU_2013_0050_BIT_E-TRANSCRIPT.pdf" target="_blank">🔒 E-Transcript</a>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  <p>ZAOU-GenDoc · Office of the Deputy Registrar · <a href="https://github.com/Adolphechris/Diplome" target="_blank">Adolphechris/Diplome</a> · Zambian Open University · Lusaka, Zambia</p>
+</footer>
+
+<script>
+function filter() {
+  const q  = document.getElementById("q").value.toLowerCase();
+  const m  = document.getElementById("m").value;
+  const rows = document.querySelectorAll("#tb tr");
+  let n = 0;
+  rows.forEach(r => {
+    const txt    = r.innerText.toLowerCase();
+    const badge  = r.querySelector(".badge")?.innerText || "";
+    const show   = txt.includes(q) && (!m || badge === m);
+    r.style.display = show ? "" : "none";
+    if (show) n++;
+  });
+  document.getElementById("cnt").textContent = n + " étudiant" + (n > 1 ? "s" : "");
+}
+</script>
+</body>
+</html>
