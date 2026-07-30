@@ -36,9 +36,12 @@ def build_pdf_for_student(student, env, output_dir, audit_records, etranscript=F
     qr_data_uri = generate_verification_qr_data_uri(student_id, initial_hash)
     
     # Absolute paths for template images
-    logo_path = (BASE_DIR / "assets" / "zaou_logo.png").as_uri()
-    seal_path = (BASE_DIR / "assets" / "university_seal.png").as_uri()
-    sig_path  = (BASE_DIR / "assets" / "registrar_signature.png").as_uri()
+    logo_path      = (BASE_DIR / "assets" / "zaou_logo.png").as_uri()
+    seal_path      = (BASE_DIR / "assets" / "university_seal.png").as_uri()
+    seal_wet_path  = (BASE_DIR / "assets" / "seal_blue_wet.png").as_uri()
+    seal_dry_path  = (BASE_DIR / "assets" / "seal_dry_embossed.png").as_uri()
+    seal_date_path = (BASE_DIR / "assets" / "seal_date_red.png").as_uri()
+    sig_path       = (BASE_DIR / "assets" / "registrar_signature.png").as_uri()
     
     # 4. Render HTML Template (version normale OU e-transcript)
     template = env.get_template("transcript_2012_2017.html")
@@ -46,6 +49,9 @@ def build_pdf_for_student(student, env, output_dir, audit_records, etranscript=F
         student=student,
         logo_path=logo_path,
         seal_path=seal_path,
+        seal_wet_path=seal_wet_path,
+        seal_dry_path=seal_dry_path,
+        seal_date_path=seal_date_path,
         sig_path=sig_path,
         qr_data_uri=qr_data_uri,
         sha256_short=initial_hash[:16].upper(),

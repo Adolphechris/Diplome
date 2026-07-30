@@ -10215,221 +10215,389 @@
       "start_year": 2012,
       "end_year": 2015,
       "academic_sessions": "2012 - 2015",
-      "gpa": 3.52,
+      "gpa": 73.4,
       "qualification_class": "MERIT",
       "academic_record": [
         {
-          "year_title": "FIRST YEAR (2012)",
+          "year_title": "FIRST YEAR — SEMESTER 1  (2012)",
           "academic_year": "2012",
           "level": "FIRST YEAR",
           "courses": [
             {
-              "code": "BIT 110",
+              "code": "BIT 101",
               "title": "Introduction to Information Technology",
               "credits": 3,
+              "score": 74,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 75
+              "grade_points": 3.5
             },
             {
-              "code": "BIT 111",
+              "code": "BIT 102",
               "title": "Fundamentals of Computer Programming",
               "credits": 3,
+              "score": 73,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 73
+              "grade_points": 3.5
             },
             {
-              "code": "MA 110",
+              "code": "MA 101",
               "title": "Mathematics for Computing I",
               "credits": 3,
+              "score": 70,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 70
+              "grade_points": 3.5
             },
             {
-              "code": "LA 111",
+              "code": "LA 101",
               "title": "Communication and Academic Writing Skills",
               "credits": 3,
+              "score": 77,
               "grade": "A",
-              "grade_points": 4.0,
-              "score": 77
+              "grade_points": 4.0
             },
             {
-              "code": "BIT 120",
-              "title": "Computer Systems and Architecture",
+              "code": "CS 101",
+              "title": "Introduction to Computer Science",
               "credits": 3,
+              "score": 73,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 75
-            },
-            {
-              "code": "MA 120",
-              "title": "Discrete Mathematics for IT",
-              "credits": 3,
-              "grade": "B+",
-              "grade_points": 3.5,
-              "score": 73
+              "grade_points": 3.5
             }
           ],
           "comment": "CLEAR PASS"
         },
         {
-          "year_title": "SECOND YEAR (2013)",
+          "year_title": "FIRST YEAR — SEMESTER 2  (2013)",
+          "academic_year": "2013",
+          "level": "FIRST YEAR",
+          "courses": [
+            {
+              "code": "BIT 110",
+              "title": "Computer Systems and Architecture",
+              "credits": 3,
+              "score": 75,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "MA 110",
+              "title": "Discrete Mathematics for IT",
+              "credits": 3,
+              "score": 73,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "BIT 111",
+              "title": "Database Concepts",
+              "credits": 3,
+              "score": 72,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "CS 110",
+              "title": "Web Fundamentals",
+              "credits": 3,
+              "score": 73,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "LA 110",
+              "title": "Technical Report Writing",
+              "credits": 3,
+              "score": 74,
+              "grade": "B+",
+              "grade_points": 3.5
+            }
+          ],
+          "comment": "CLEAR PASS"
+        },
+        {
+          "year_title": "SECOND YEAR — SEMESTER 1  (2013)",
           "academic_year": "2013",
           "level": "SECOND YEAR",
           "courses": [
             {
-              "code": "BIT 210",
+              "code": "BIT 201",
               "title": "Object-Oriented Programming",
               "credits": 3,
+              "score": 71,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 71
+              "grade_points": 3.5
             },
             {
-              "code": "BIT 211",
+              "code": "BIT 202",
               "title": "Database Management Systems",
               "credits": 3,
+              "score": 75,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 75
+              "grade_points": 3.5
             },
             {
-              "code": "BIT 220",
+              "code": "BIT 203",
               "title": "Data Structures and Algorithms",
               "credits": 3,
+              "score": 74,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 74
+              "grade_points": 3.5
             },
             {
-              "code": "BIT 221",
+              "code": "MA 201",
+              "title": "Linear Algebra for Information Technology",
+              "credits": 3,
+              "score": 72,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "BIT 204",
               "title": "Systems Analysis and Design",
               "credits": 3,
+              "score": 73,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 72
-            },
-            {
-              "code": "BIT 222",
-              "title": "Web Technologies and Applications",
-              "credits": 3,
-              "grade": "A",
-              "grade_points": 4.0,
-              "score": 76
-            },
-            {
-              "code": "BIT 223",
-              "title": "Computer Networks I",
-              "credits": 3,
-              "grade": "B+",
-              "grade_points": 3.5,
-              "score": 73
+              "grade_points": 3.5
             }
           ],
           "comment": "CLEAR PASS"
         },
         {
-          "year_title": "THIRD YEAR (2014)",
+          "year_title": "SECOND YEAR — SEMESTER 2  (2014)",
+          "academic_year": "2014",
+          "level": "SECOND YEAR",
+          "courses": [
+            {
+              "code": "BIT 210",
+              "title": "Web Technologies and Applications",
+              "credits": 3,
+              "score": 76,
+              "grade": "A",
+              "grade_points": 4.0
+            },
+            {
+              "code": "BIT 211",
+              "title": "Computer Networks I",
+              "credits": 3,
+              "score": 73,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "BIT 212",
+              "title": "Operating Systems",
+              "credits": 3,
+              "score": 74,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "CS 201",
+              "title": "Human-Computer Interaction",
+              "credits": 3,
+              "score": 72,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "BIT 213",
+              "title": "Software Engineering I",
+              "credits": 3,
+              "score": 73,
+              "grade": "B+",
+              "grade_points": 3.5
+            }
+          ],
+          "comment": "CLEAR PASS"
+        },
+        {
+          "year_title": "THIRD YEAR — SEMESTER 1  (2014)",
           "academic_year": "2014",
           "level": "THIRD YEAR",
           "courses": [
             {
-              "code": "BIT 310",
-              "title": "Operating Systems Concepts",
-              "credits": 3,
-              "grade": "B+",
-              "grade_points": 3.5,
-              "score": 74
-            },
-            {
-              "code": "BIT 311",
-              "title": "Software Engineering Principles",
-              "credits": 3,
-              "grade": "B+",
-              "grade_points": 3.5,
-              "score": 73
-            },
-            {
-              "code": "BIT 320",
+              "code": "BIT 301",
               "title": "Computer Networks II & Security",
               "credits": 3,
+              "score": 71,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 71
+              "grade_points": 3.5
             },
             {
-              "code": "BIT 321",
-              "title": "Management Information Systems",
+              "code": "BIT 302",
+              "title": "Software Engineering II",
               "credits": 3,
+              "score": 73,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 73
+              "grade_points": 3.5
             },
             {
-              "code": "BIT 322",
+              "code": "BIT 303",
+              "title": "Information Systems Management",
+              "credits": 3,
+              "score": 74,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "BIT 304",
               "title": "IT Project Management",
               "credits": 3,
+              "score": 73,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 73
+              "grade_points": 3.5
             },
             {
-              "code": "BIT 323",
-              "title": "Research Methods in IT",
+              "code": "BIT 305",
+              "title": "Research Methods in Information Technology",
               "credits": 3,
+              "score": 72,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 73
+              "grade_points": 3.5
             }
           ],
           "comment": "CLEAR PASS"
         },
         {
-          "year_title": "FOURTH YEAR (2015)",
+          "year_title": "THIRD YEAR — SEMESTER 2  (2015)",
+          "academic_year": "2015",
+          "level": "THIRD YEAR",
+          "courses": [
+            {
+              "code": "BIT 310",
+              "title": "Advanced Database Systems",
+              "credits": 3,
+              "score": 74,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "BIT 311",
+              "title": "Distributed Systems",
+              "credits": 3,
+              "score": 72,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "BIT 312",
+              "title": "Cloud Computing Fundamentals",
+              "credits": 3,
+              "score": 73,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "BIT 313",
+              "title": "Mobile Application Development",
+              "credits": 3,
+              "score": 75,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "BIT 314",
+              "title": "IT Ethics, Law and Governance",
+              "credits": 3,
+              "score": 72,
+              "grade": "B+",
+              "grade_points": 3.5
+            }
+          ],
+          "comment": "CLEAR PASS"
+        },
+        {
+          "year_title": "FOURTH YEAR — SEMESTER 1  (2015)",
+          "academic_year": "2015",
+          "level": "FOURTH YEAR",
+          "courses": [
+            {
+              "code": "BIT 401",
+              "title": "Information Security and Cryptography",
+              "credits": 3,
+              "score": 76,
+              "grade": "A",
+              "grade_points": 4.0
+            },
+            {
+              "code": "BIT 402",
+              "title": "Advanced Computer Networks",
+              "credits": 3,
+              "score": 73,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "BIT 403",
+              "title": "Enterprise Systems and ERP",
+              "credits": 3,
+              "score": 74,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "BIT 404",
+              "title": "E-Commerce and Digital Business",
+              "credits": 3,
+              "score": 72,
+              "grade": "B+",
+              "grade_points": 3.5
+            },
+            {
+              "code": "BIT 405",
+              "title": "Wireless and Mobile Computing",
+              "credits": 3,
+              "score": 74,
+              "grade": "B+",
+              "grade_points": 3.5
+            }
+          ],
+          "comment": "CLEAR PASS"
+        },
+        {
+          "year_title": "FOURTH YEAR — SEMESTER 2  (2015)",
           "academic_year": "2015",
           "level": "FOURTH YEAR",
           "courses": [
             {
               "code": "BIT 410",
-              "title": "Information Security and Cryptography",
+              "title": "Systems Integration and Architecture",
               "credits": 3,
-              "grade": "A",
-              "grade_points": 4.0,
-              "score": 76
+              "score": 73,
+              "grade": "B+",
+              "grade_points": 3.5
             },
             {
               "code": "BIT 411",
-              "title": "Distributed Systems & Cloud Computing",
+              "title": "Data Analytics and Business Intelligence",
               "credits": 3,
+              "score": 74,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 72
+              "grade_points": 3.5
             },
             {
-              "code": "BIT 420",
-              "title": "Wireless and Mobile Computing",
+              "code": "BIT 412",
+              "title": "IT Governance and Compliance",
               "credits": 3,
+              "score": 72,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 74
+              "grade_points": 3.5
             },
             {
-              "code": "BIT 421",
-              "title": "E-Commerce and Enterprise Systems",
+              "code": "BIT 413",
+              "title": "Innovation and Entrepreneurship in IT",
               "credits": 3,
+              "score": 75,
               "grade": "B+",
-              "grade_points": 3.5,
-              "score": 71
+              "grade_points": 3.5
             },
             {
               "code": "BIT 400",
               "title": "Final Year IT Project / Capstone Dissertation",
               "credits": 6,
-              "grade": "B+",
-              "grade_points": 3.5,
-              "score": 75
+              "score": 77,
+              "grade": "A",
+              "grade_points": 4.0
             }
           ],
           "comment": "CLEAR PASS"

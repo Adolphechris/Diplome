@@ -7,155 +7,148 @@
 </head>
 <body>
 
-    <!-- PAGE 1: FRONT SIDE ACADEMIC TRANSCRIPT -->
+    <!-- PAGE 1: RECTO / FRONT SIDE -->
     <div class="page">
-        <!-- Header Section -->
-        <div class="header-section">
-            <img class="logo-img" src="{{ logo_path }}" alt="ZAOU Logo">
-            <div class="admin-block">
-                <div class="univ-name">THE ZAMBIAN OPEN UNIVERSITY</div>
-                <div>OFFICE OF THE DEPUTY REGISTRAR</div>
-                <div>P.O. BOX LUSAKA - ZAMBIA</div>
-                <div class="contact-info">Tel: +260-211-256162 / Fax: +260-211-256163 / E-Mail: academic-office@zaou.ac.zm</div>
-            </div>
+
+        {% if is_etranscript %}
+        <!-- FILIGRANE ARRIÈRE-PLAN E-TRANSCRIPT -->
+        <div class="watermark-container">
+            <img class="watermark-logo" src="{{ logo_path }}" alt="">
+            <div class="watermark-text">OFFICIAL E-TRANSCRIPT</div>
+        </div>
+        <!-- BADGE VERSION ÉLECTRONIQUE -->
+        <div class="e-transcript-header-badge">
+            OFFICIAL SECURE E-TRANSCRIPT — ELECTRONICALLY VERIFIED DOCUMENT
+        </div>
+        {% endif %}
+
+        <!-- HEADER INSTITUTIONNEL -->
+        <table class="header-table">
+            <tr>
+                <td class="header-logo-td">
+                    <img class="logo-img" src="{{ logo_path }}" alt="ZAOU Crest">
+                </td>
+                <td class="header-text-td">
+                    <h1 class="univ-name">THE ZAMBIAN OPEN UNIVERSITY</h1>
+                    <div class="office-title">OFFICE OF THE DEPUTY REGISTRAR</div>
+                    <div class="po-box">P.O. BOX LUSAKA - ZAMBIA</div>
+                    <div class="contact-info">Tel: +260-211-256162 / Fax: +260-211-256163 / E-Mail: academic-office@zaou.ac.zm</div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- TITRE DU DOCUMENT -->
+        <div class="doc-title">
+            {% if is_etranscript %}OFFICIAL E-TRANSCRIPT{% else %}OFFICIAL TRANSCRIPT{% endif %}
         </div>
 
-        <div class="doc-title">OFFICIAL TRANSCRIPT</div>
+        <!-- PARAGRAPHE BIODATA -->
+        <p class="biodata-p">
+            This is to certify that <span class="bold-field">{{ student.full_name }}</span> Student Identity Number <span class="bold-field">{{ student.student_id }}</span> was a registered student of The Zambian Open University in the {{ student.school }} during the Academic Session(s) <span class="bold-field">{{ student.academic_sessions }}</span>.
+        </p>
 
-        <!-- Student Bio Data Paragraph -->
-        <div class="bio-data">
-            This is to certify that <span class="student-name">{{ student.full_name }}</span> Student Identity Number <span class="student-id">{{ student.student_id }}</span> was a registered student of The Zambian Open University in the {{ student.school }} during the Academic Session(s) <span class="student-session">{{ student.graduation_session }}</span>.
-        </div>
-
-        <!-- Academic Performance Layout (4 Annual Blocks) -->
-        {% for yr in student.academic_record %}
-        <div class="annual-block">
-            <div class="year-title">{{ yr.academic_year }} - {{ yr.level }}</div>
-            <table class="course-table">
-                {% for course in yr.courses %}
+        <!-- RELEVÉ DE NOTES PAR ANNÉE (1 À 4) -->
+        {% for year in student.academic_record %}
+        <div class="year-block">
+            <div class="year-title">{{ year.year_title if year.year_title else year.level }}</div>
+            <table class="courses-table">
+                <thead>
+                    <tr>
+                        <th class="col-code">Course Code</th>
+                        <th class="col-title">Course Title</th>
+                        <th class="col-score">Score (%)</th>
+                        <th class="col-grade">Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for course in year.courses %}
                 <tr>
                     <td class="col-code">{{ course.code }}</td>
                     <td class="col-title">{{ course.title }}</td>
+                    <td class="col-score">{% if course.score is defined %}{{ course.score }}%{% else %}—{% endif %}</td>
                     <td class="col-grade">{{ course.grade }}</td>
                 </tr>
                 {% endfor %}
+                </tbody>
             </table>
-            <div class="comment-line">COMMENT : {{ yr.comment }}</div>
-            <div class="divider-line"></div>
+            <div class="comment-line">COMMENT : {{ year.comment }}</div>
         </div>
         {% endfor %}
 
-        <!-- Graduation Statement -->
+        <!-- ATTESTATION DU DIPLÔME ET MENTION -->
         <div class="graduation-statement">
             {{ student.pronoun }} WAS AWARDED THE DEGREE OF {{ student.programme }} WITH {{ student.qualification_class }} AT THE GRADUATION CEREMONY HELD IN LUSAKA.
         </div>
 
-        <!-- Validation, Signatures & Seal Zone -->
-        <div class="validation-zone">
-            <table class="validation-table">
-                <tr>
-                    <td class="sig-cell">
-                        <img class="sig-img" src="{{ sig_path }}" alt="Signature"><br>
-                        <span class="sig-title">DEPUTY REGISTRAR(ACADEMIC)</span>
-                    </td>
-                    <td class="seal-cell">
-                        <img class="seal-img" src="{{ seal_path }}" alt="University Seal">
-                        <div class="seal-title">UNIVERSITY SEAL</div>
-                    </td>
-                    <td class="qr-cell">
-                        <img class="qr-img" src="{{ qr_data_uri }}" alt="QR Code">
-                        <div class="qr-hash">SHA256: {{ sha256_short }}</div>
-                    </td>
-                </tr>
-            </table>
-        </div>
+        <!-- BLOC LÉGALISATION : 3 SCEAUX + SIGNATURE + QR CODE -->
+        <table class="signatures-table">
+            <tr>
+                <!-- COL 1 : Signature du Deputy Registrar -->
+                <td class="sig-col">
+                    <img class="sig-img" src="{{ sig_path }}" alt="Signature Deputy Registrar"><br>
+                    <span class="label-title">DEPUTY REGISTRAR(ACADEMIC)</span>
+                </td>
 
-        <!-- Footer Legend Note -->
-        <div class="footer-legend">
-            <b>NB :</b> <i>A key to the understanding of the grade is on the reverse side of this sheet.</i>
-        </div>
-    </div>
+                <!-- COL 2 : Sceau humide bleu + Sceau sec gaufré superposés -->
+                <td class="seal-col">
+                    <div class="seals-stack">
+                        <!-- Sceau principal humide bleu -->
+                        <img class="seal-wet-blue" src="{{ seal_wet_path }}" alt="University Seal – Blue Ink">
+                        <!-- Sceau sec gaufré en superposition (légèrement décalé) -->
+                        <img class="seal-dry" src="{{ seal_dry_path }}" alt="University Dry Seal">
+                    </div>
+                    <span class="label-title">UNIVERSITY SEAL</span>
+                </td>
 
-    <!-- PAGE 2: REVERSE SIDE (VERSO) LEGEND -->
-    <div class="page legend-page">
-        <div class="legend-title">KEY TO UNDERSTANDING OF GRADES OF THE ZAMBIAN OPEN UNIVERSITY</div>
-
-        <table class="scale-table">
-            <tr>
-                <td class="scale-range">86 – 100%</td>
-                <td class="scale-letter">A+</td>
-                <td class="scale-desc">DISTINCTION</td>
-            </tr>
-            <tr>
-                <td class="scale-range">76 – 85%</td>
-                <td class="scale-letter">A</td>
-                <td class="scale-desc">DISTINCTION</td>
-            </tr>
-            <tr>
-                <td class="scale-range">68 – 75%</td>
-                <td class="scale-letter">B+</td>
-                <td class="scale-desc">MERITORIOUS</td>
-            </tr>
-            <tr>
-                <td class="scale-range">62 – 67%</td>
-                <td class="scale-letter">B</td>
-                <td class="scale-desc">VERY SATISFACTORY</td>
-            </tr>
-            <tr>
-                <td class="scale-range">56 – 61%</td>
-                <td class="scale-letter">C+</td>
-                <td class="scale-desc">DEFINITE PASS</td>
-            </tr>
-            <tr>
-                <td class="scale-range">50 – 55%</td>
-                <td class="scale-letter">C</td>
-                <td class="scale-desc">BARE PASS</td>
-            </tr>
-            <tr>
-                <td class="scale-range">40 – 49%</td>
-                <td class="scale-letter">D+</td>
-                <td class="scale-desc">BARE FAIL</td>
-            </tr>
-            <tr>
-                <td class="scale-range">0 – 39%</td>
-                <td class="scale-letter">D</td>
-                <td class="scale-desc">CLEAR FAIL</td>
-            </tr>
-            <tr>
-                <td class="scale-range">--</td>
-                <td class="scale-letter">P</td>
-                <td class="scale-desc">PASS IN SUPPLEMENTARY EXAM</td>
-            </tr>
-            <tr>
-                <td class="scale-range">--</td>
-                <td class="scale-letter">S</td>
-                <td class="scale-desc">SUCCESSFULLY COMPLETED INDUSTRIAL ATTACHMENT</td>
-            </tr>
-            <tr>
-                <td class="scale-range">--</td>
-                <td class="scale-letter">F</td>
-                <td class="scale-desc">FAIL IN SUPPLEMENTARY EXAM</td>
-            </tr>
-            <tr>
-                <td class="scale-range">--</td>
-                <td class="scale-letter">DQ</td>
-                <td class="scale-desc">DISQUALIFIED</td>
-            </tr>
-            <tr>
-                <td class="scale-range">--</td>
-                <td class="scale-letter">EX</td>
-                <td class="scale-desc">EXEMPTION</td>
-            </tr>
-            <tr>
-                <td class="scale-range">--</td>
-                <td class="scale-letter">INC</td>
-                <td class="scale-desc">INCOMPLETE</td>
+                <!-- COL 3 : Cachet date rouge + QR Code -->
+                <td class="qr-col">
+                    <img class="seal-date-red" src="{{ seal_date_path }}" alt="Date Stamp"><br>
+                    <img class="qr-img" src="{{ qr_data_uri }}" alt="Verification QR Code"><br>
+                    <div class="sha-text">SHA256: {{ sha256_short }}</div>
+                </td>
             </tr>
         </table>
 
-        <div class="security-note">
+        <!-- PIED DE PAGE NOTE VERSO -->
+        <div class="footer-note">
+            NB : A key to the understanding of the grade is on the reverse side of this sheet.
+        </div>
+
+    </div>
+
+    <!-- PAGE 2: VERSO / REVERSE SIDE (LÉGENDE OFFICIELLE DE L'UNIVERSITÉ) -->
+    <div class="page page-break">
+
+        {% if is_etranscript %}
+        <div class="watermark-container">
+            <img class="watermark-logo" src="{{ logo_path }}" alt="">
+            <div class="watermark-text">OFFICIAL E-TRANSCRIPT</div>
+        </div>
+        {% endif %}
+
+        <div class="legend-title">KEY TO UNDERSTANDING OF GRADES OF THE ZAMBIAN OPEN UNIVERSITY</div>
+
+        <table class="legend-table">
+            <tr><td><strong>86 – 100%</strong></td><td><strong>A+</strong></td><td>DISTINCTION</td></tr>
+            <tr><td><strong>76 – 85%</strong></td><td><strong>A</strong></td><td>DISTINCTION</td></tr>
+            <tr><td><strong>68 – 75%</strong></td><td><strong>B+</strong></td><td>MERITORIOUS</td></tr>
+            <tr><td><strong>62 – 67%</strong></td><td><strong>B</strong></td><td>VERY SATISFACTORY</td></tr>
+            <tr><td><strong>56 – 61%</strong></td><td><strong>C+</strong></td><td>DEFINITE PASS</td></tr>
+            <tr><td><strong>50 – 55%</strong></td><td><strong>C</strong></td><td>BARE PASS</td></tr>
+            <tr><td><strong>40 – 49%</strong></td><td><strong>D+</strong></td><td>BARE FAIL</td></tr>
+            <tr><td><strong>0 – 39%</strong></td><td><strong>D</strong></td><td>CLEAR FAIL</td></tr>
+            <tr><td>--</td><td><strong>P</strong></td><td>PASS IN SUPPLEMENTARY EXAM</td></tr>
+            <tr><td>--</td><td><strong>S</strong></td><td>SUCCESSFULLY COMPLETED INDUSTRIAL ATTACHMENT</td></tr>
+            <tr><td>--</td><td><strong>F</strong></td><td>FAIL IN SUPPLEMENTARY EXAM</td></tr>
+            <tr><td>--</td><td><strong>DQ</strong></td><td>DISQUALIFIED</td></tr>
+            <tr><td>--</td><td><strong>EX</strong></td><td>EXEMPTION</td></tr>
+            <tr><td>--</td><td><strong>INC</strong></td><td>INCOMPLETE</td></tr>
+        </table>
+
+        <div class="legend-notice">
             NOTE: THIS TRANSCRIPT IS NOT VALID IF IT DOES NOT BEAR THE ZAMBIAN OPEN UNIVERSITY SEAL OR IF IT HAS ANY ALTERATION(S).
         </div>
+
     </div>
 
 </body>
