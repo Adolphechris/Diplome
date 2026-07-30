@@ -2,121 +2,210 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ student.full_name }} - ZAOU Transcript</title>
+    <title>Official Academic Transcript - {{ student.full_name }}</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-{% for year in student.academic_record %}
-<div class="page {% if not loop.first %}page-break{% endif %}">
-    
-    <!-- FILIGRANE EN ARRIÈRE-PLAN -->
-    <div class="watermark-container">
-        <img class="watermark-logo" src="{{ logo_path }}" alt="ZAOU Watermark Logo">
-        <div class="watermark-text">OFFICIAL TRANSCRIPT</div>
+    <!-- PAGE 1: FRONT SIDE ACADEMIC TRANSCRIPT -->
+    <div class="page">
+        
+        <!-- WATERMARK BACKGROUND FOR E-TRANSCRIPT -->
+        {% if is_etranscript %}
+        <div class="watermark-container">
+            <img class="watermark-logo" src="{{ logo_path }}" alt="ZAOU Logo">
+            <div class="watermark-text">OFFICIAL E-TRANSCRIPT</div>
+        </div>
+        {% else %}
+        <div class="watermark-container">
+            <img class="watermark-logo" src="{{ logo_path }}" alt="ZAOU Logo">
+        </div>
+        {% endif %}
+
+        <!-- HEADER SECTION -->
+        <table class="header-table">
+            <tr>
+                <td class="header-logo-td">
+                    <img class="logo-img" src="{{ logo_path }}" alt="ZAOU Logo">
+                </td>
+                <td class="header-text-td">
+                    <div class="univ-name">THE ZAMBIAN OPEN UNIVERSITY</div>
+                    <div class="office-title">OFFICE OF THE DEPUTY REGISTRAR</div>
+                    <div class="po-box">P.O. BOX 31965, LUSAKA - ZAMBIA</div>
+                    <div class="contact-info">Tel: +260-211-256162 / Fax: +260-211-256163 / E-Mail: academic-office@zaou.ac.zm</div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="doc-title">OFFICIAL TRANSCRIPT OF ACADEMIC RECORD</div>
+
+        <!-- BIODATA PARAGRAPH -->
+        <p class="biodata-p">
+            This is to certify that <span class="bold-field">{{ student.full_name }}</span> 
+            Student Identity Number <span class="bold-field">{{ student.student_id }}</span> 
+            was a registered student of The Zambian Open University in the {{ student.school if student.school else "School of Humanities and Social Sciences" }} 
+            during the Academic Session(s) <span class="bold-field">{{ student.graduation_session if student.graduation_session else student.academic_sessions }}</span>.
+        </p>
+
+        <!-- ACADEMIC PERFORMANCE LAYOUT -->
+        {% for yr in student.academic_record %}
+        <div class="year-block">
+            <div class="year-title">{{ yr.year_title if yr.year_title else (yr.academic_year ~ " - " ~ yr.level) }}</div>
+            
+            <table class="courses-table">
+                <thead>
+                    <tr>
+                        <th class="col-code">COURSE CODE</th>
+                        <th class="col-title">COURSE TITLE</th>
+                        <th class="col-grade">GRADE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in yr.courses %}
+                    <tr>
+                        <td class="col-code">{{ course.code }}</td>
+                        <td class="col-title">{{ course.title }}</td>
+                        <td class="col-grade">{{ course.grade }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="comment-line">COMMENT : {{ yr.comment }}</div>
+        </div>
+        {% endfor %}
+
+        <!-- GRADUATION STATEMENT -->
+        <div class="graduation-statement">
+            {{ student.pronoun if student.pronoun else "HE" }} WAS AWARDED THE DEGREE OF {{ student.programme }} WITH {{ student.qualification_class }} AT THE GRADUATION CEREMONY HELD IN LUSAKA.
+        </div>
+
+        <!-- VALIDATION, SIGNATURES & SEAL ZONE -->
+        <table class="signatures-table">
+            <tr>
+                <td class="sig-col">
+                    <img class="sig-img" src="{{ sig_path }}" alt="Signature"><br>
+                    <span class="label-title">DEPUTY REGISTRAR (ACADEMIC)</span>
+                </td>
+                <td class="seal-col">
+                    <img class="seal-img" src="{{ seal_path }}" alt="University Seal"><br>
+                    <span class="label-title">UNIVERSITY SEAL</span>
+                </td>
+                <td class="qr-col">
+                    <img class="qr-img" src="{{ qr_data_uri }}" alt="QR Code"><br>
+                    <div class="sha-text">SHA256: {{ sha256_short }}</div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- FOOTER LEGEND NOTE -->
+        <div class="footer-note">
+            <b>NB :</b> <i>A key to the understanding of the grade is on the reverse side of this sheet.</i>
+        </div>
     </div>
 
-    <!-- EN-TÊTE INSTITUTIONNEL ZAOU -->
-    <table class="header-table">
-        <tr>
-            <td class="header-logo-td">
-                <img class="logo-img" src="{{ logo_path }}" alt="ZAOU Logo">
-            </td>
-            <td class="header-text-td">
-                <h1 class="univ-name">THE ZAMBIAN OPEN UNIVERSITY</h1>
-                <h2 class="office-title">OFFICE OF THE DEPUTY REGISTRAR</h2>
-                <p class="po-box">P.O. BOX 31965, LUSAKA - ZAMBIA</p>
-                <p class="contact-info">Tel: +260-211-256162 / Fax: +260-211-256163 / E-Mail: academic-office@zaou.ac.zm</p>
-            </td>
-        </tr>
-    </table>
-
-    <div class="doc-title">OFFICIAL TRANSCRIPT OF ACADEMIC RECORD</div>
-
-    <!-- BIODATA (AFFICHE EN PAGE 1) -->
-    {% if loop.first %}
-    <p class="biodata-p">
-        This is to certify that <span class="bold-field">{{ student.full_name }}</span> 
-        Student Identity Number <span class="bold-field">{{ student.student_id }}</span> 
-        was a registered student of The Zambian Open University in the School of Humanities and Social Sciences 
-        during the Academic Session(s) <span class="bold-field">{{ student.academic_sessions }}</span>.
-    </p>
-    {% endif %}
-
-    <!-- BLOC ANNEE ACADEMIQUE (1 ANNEE PAR PAGE) -->
-    <div class="year-block">
-        <div class="year-title">{{ year.year_title }}</div>
+    <!-- PAGE 2: REVERSE SIDE (VERSO) LEGEND -->
+    <div class="page page-break legend-page">
         
-        <table class="courses-table">
+        {% if is_etranscript %}
+        <div class="watermark-container">
+            <img class="watermark-logo" src="{{ logo_path }}" alt="ZAOU Logo">
+            <div class="watermark-text">OFFICIAL E-TRANSCRIPT</div>
+        </div>
+        {% else %}
+        <div class="watermark-container">
+            <img class="watermark-logo" src="{{ logo_path }}" alt="ZAOU Logo">
+        </div>
+        {% endif %}
+
+        <div class="legend-title">KEY TO UNDERSTANDING OF GRADES OF THE ZAMBIAN OPEN UNIVERSITY</div>
+
+        <table class="legend-table">
             <thead>
-                <tr>
-                    <th class="col-code">COURSE CODE</th>
-                    <th class="col-title">COURSE TITLE</th>
-                    <th class="col-score">MARKS (100)</th>
-                    <th class="col-grade">GRADE</th>
+                <tr style="border-bottom: 1pt solid #000;">
+                    <td style="font-weight:bold; width:30%;">PERCENTAGE RANGE</td>
+                    <td style="font-weight:bold; width:20%;">GRADE LETTER</td>
+                    <td style="font-weight:bold; width:50%;">DESCRIPTION</td>
                 </tr>
             </thead>
             <tbody>
-                {% for course in year.courses %}
                 <tr>
-                    <td class="col-code">{{ course.code }}</td>
-                    <td class="col-title">{{ course.title }}</td>
-                    <td class="col-score">{{ "%.1f"|format(course.score) if course.score % 1 != 0 else course.score|int }}</td>
-                    <td class="col-grade">{{ course.grade }}</td>
+                    <td class="scale-range">86 – 100%</td>
+                    <td class="scale-letter">A+</td>
+                    <td class="scale-desc">DISTINCTION</td>
                 </tr>
-                {% endfor %}
+                <tr>
+                    <td class="scale-range">76 – 85%</td>
+                    <td class="scale-letter">A</td>
+                    <td class="scale-desc">DISTINCTION</td>
+                </tr>
+                <tr>
+                    <td class="scale-range">68 – 75%</td>
+                    <td class="scale-letter">B+</td>
+                    <td class="scale-desc">MERITORIOUS</td>
+                </tr>
+                <tr>
+                    <td class="scale-range">62 – 67%</td>
+                    <td class="scale-letter">B</td>
+                    <td class="scale-desc">VERY SATISFACTORY</td>
+                </tr>
+                <tr>
+                    <td class="scale-range">56 – 61%</td>
+                    <td class="scale-letter">C+</td>
+                    <td class="scale-desc">DEFINITE PASS</td>
+                </tr>
+                <tr>
+                    <td class="scale-range">50 – 55%</td>
+                    <td class="scale-letter">C</td>
+                    <td class="scale-desc">BARE PASS</td>
+                </tr>
+                <tr>
+                    <td class="scale-range">40 – 49%</td>
+                    <td class="scale-letter">D+</td>
+                    <td class="scale-desc">BARE FAIL</td>
+                </tr>
+                <tr>
+                    <td class="scale-range">0 – 39%</td>
+                    <td class="scale-letter">D</td>
+                    <td class="scale-desc">CLEAR FAIL</td>
+                </tr>
+                <tr>
+                    <td class="scale-range">--</td>
+                    <td class="scale-letter">P</td>
+                    <td class="scale-desc">PASS IN SUPPLEMENTARY EXAM</td>
+                </tr>
+                <tr>
+                    <td class="scale-range">--</td>
+                    <td class="scale-letter">S</td>
+                    <td class="scale-desc">SUCCESSFULLY COMPLETED INDUSTRIAL ATTACHMENT</td>
+                </tr>
+                <tr>
+                    <td class="scale-range">--</td>
+                    <td class="scale-letter">F</td>
+                    <td class="scale-desc">FAIL IN SUPPLEMENTARY EXAM</td>
+                </tr>
+                <tr>
+                    <td class="scale-range">--</td>
+                    <td class="scale-letter">DQ</td>
+                    <td class="scale-desc">DISQUALIFIED</td>
+                </tr>
+                <tr>
+                    <td class="scale-range">--</td>
+                    <td class="scale-letter">EX</td>
+                    <td class="scale-desc">EXEMPTION</td>
+                </tr>
+                <tr>
+                    <td class="scale-range">--</td>
+                    <td class="scale-letter">INC</td>
+                    <td class="scale-desc">INCOMPLETE</td>
+                </tr>
             </tbody>
         </table>
-        
-        <div class="comment-line">SENATE DECISION : {{ year.comment }}</div>
+
+        <div class="legend-notice">
+            <b>NOTE:</b> THIS TRANSCRIPT IS NOT VALID IF IT DOES NOT BEAR THE ZAMBIAN OPEN UNIVERSITY SEAL OR IF IT HAS ANY ALTERATION(S).
+        </div>
     </div>
-
-    <!-- DÉCISION FINALE DU SÉNAT (AFFICHEE SUR LA DERNIÈRE PAGE) -->
-    {% if loop.last %}
-    <div class="graduation-statement">
-        {{ student.pronoun }} WAS AWARDED THE DEGREE OF {{ student.programme }} WITH {{ student.qualification_class }} AT THE GRADUATION CEREMONY HELD IN LUSAKA.
-    </div>
-    {% endif %}
-
-    <!-- BLOC LEGALISATION / AUTHENTIFICATION APPOSE SUR TOUTES LES PAGES -->
-    <table class="signatures-table">
-        <tr>
-            <!-- COL 1 : Espace signature manuscrite à la main (sur dernière page) ou signature (pages 1-3) -->
-            <td class="sig-col">
-                {% if loop.last %}
-                <div class="sig-manual-space"></div>
-                <div class="sig-name">Dr. Chanda Mwape</div>
-                <div class="sig-title">DEPUTY REGISTRAR (ACADEMIC)</div>
-                {% else %}
-                <div class="sig-page-note">Page {{ loop.index }} of {{ loop.length }}</div>
-                <div class="sig-title">OFFICIAL RECORD</div>
-                {% endif %}
-            </td>
-
-            <!-- COL 2 : Sceau principal bleu officiel apposé sur TOUTES les pages -->
-            <td class="seal-wet-col">
-                <img class="seal-wet-blue" src="{{ seal_wet_path }}" alt="Official ZAOU Wet Seal">
-            </td>
-
-            <!-- COL 3 : Cachet rouge de datation & QR code (sur dernière page) -->
-            <td class="qr-col">
-                {% if loop.last %}
-                <img class="seal-date-red" src="{{ seal_date_path }}" alt="Date Stamp"><br>
-                <img class="qr-img" src="{{ qr_data_uri }}" alt="Verification QR Code"><br>
-                <div class="sha-text">SHA256: {{ sha256_short }}</div>
-                {% else %}
-                <div class="page-num-box">PAGE {{ loop.index }} / {{ loop.length }}</div>
-                {% endif %}
-            </td>
-        </tr>
-    </table>
-
-    <div class="footer-note">
-        NB : A key to the understanding of the grade is on the reverse side of this sheet. Page {{ loop.index }} of {{ loop.length }}.
-    </div>
-
-</div>
-{% endfor %}
 
 </body>
 </html>
