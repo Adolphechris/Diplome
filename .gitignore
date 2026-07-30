@@ -1,0 +1,4 @@
+output/pdfs/
+output/preview_page*
+__pycache__/
+*.pyc

@@ -1,0 +1,263 @@
+@page {
+    size: A4 portrait;
+    margin: 10mm 14mm 10mm 14mm;
+}
+
+body {
+    font-family: "Times New Roman", Times, "Liberation Serif", serif;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    font-size: 10pt;
+    line-height: 1.2;
+}
+
+.page {
+    box-sizing: border-box;
+}
+
+.legend-page {
+    page-break-before: always;
+    padding-top: 15px;
+}
+
+/* Header styling */
+.header-section {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.logo-img {
+    height: 60px;
+    width: auto;
+    display: block;
+    margin: 0 auto 4px auto;
+}
+
+.admin-block {
+    text-align: center;
+    font-size: 9pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 1.15;
+}
+
+.admin-block .univ-name {
+    font-size: 11.5pt;
+    letter-spacing: 0.5px;
+}
+
+.admin-block .contact-info {
+    font-size: 8pt;
+    font-weight: normal;
+    text-transform: none;
+    margin-top: 1px;
+}
+
+.doc-title {
+    font-size: 12pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 8px 0 8px 0;
+    letter-spacing: 0.8px;
+}
+
+/* Student Bio Data */
+.bio-data {
+    text-align: justify;
+    font-size: 9.5pt;
+    line-height: 1.3;
+    margin-bottom: 10px;
+}
+
+.student-name, .student-id, .student-session {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Academic Performance Layout */
+.annual-block {
+    margin-bottom: 4px;
+}
+
+.year-title {
+    font-weight: bold;
+    font-size: 9.5pt;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.course-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2px;
+}
+
+.course-table td {
+    padding: 1px 0;
+    vertical-align: top;
+    font-size: 9pt;
+}
+
+.col-code {
+    width: 15%;
+    font-weight: normal;
+}
+
+.col-title {
+    width: 72%;
+    text-align: left;
+}
+
+.col-grade {
+    width: 13%;
+    text-align: right;
+    font-weight: bold;
+    padding-right: 8px;
+}
+
+.comment-line {
+    font-weight: bold;
+    font-size: 9pt;
+    text-transform: uppercase;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.divider-line {
+    border-top: 1px solid #000000;
+    margin: 2px 0 6px 0;
+}
+
+/* Graduation Statement */
+.graduation-statement {
+    font-weight: bold;
+    font-size: 9.5pt;
+    text-transform: uppercase;
+    line-height: 1.25;
+    margin: 8px 0 10px 0;
+}
+
+/* Validation, Signatures & Seal Zone */
+.validation-zone {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.validation-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.validation-table td {
+    vertical-align: bottom;
+}
+
+.sig-cell {
+    width: 40%;
+    text-align: left;
+}
+
+.sig-img {
+    height: 35px;
+    width: auto;
+    margin-bottom: 2px;
+}
+
+.sig-title {
+    font-weight: bold;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    border-top: 1px solid #000;
+    display: inline-block;
+    padding-top: 2px;
+}
+
+.seal-cell {
+    width: 35%;
+    text-align: center;
+}
+
+.seal-img {
+    height: 80px;
+    width: auto;
+}
+
+.seal-title {
+    font-weight: bold;
+    font-size: 8pt;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+.qr-cell {
+    width: 25%;
+    text-align: right;
+}
+
+.qr-img {
+    height: 70px;
+    width: 70px;
+}
+
+.qr-hash {
+    font-family: monospace;
+    font-size: 5.5pt;
+    color: #444;
+    margin-top: 1px;
+}
+
+/* Footer Legend */
+.footer-legend {
+    font-style: italic;
+    font-size: 8.5pt;
+    margin-top: 8px;
+    text-align: left;
+}
+
+/* Reverse Side / Legend Page */
+.legend-title {
+    font-weight: bold;
+    font-size: 11pt;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 25px;
+    letter-spacing: 0.5px;
+}
+
+.scale-table {
+    width: 80%;
+    margin: 0 auto 30px auto;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+}
+
+.scale-table td {
+    padding: 4px 6px;
+    vertical-align: top;
+}
+
+.scale-range {
+    width: 25%;
+    font-weight: normal;
+}
+
+.scale-letter {
+    width: 15%;
+    font-weight: bold;
+}
+
+.scale-desc {
+    width: 60%;
+    text-transform: uppercase;
+}
+
+.security-note {
+    font-weight: bold;
+    font-size: 9pt;
+    text-transform: uppercase;
+    margin: 50px 30px 0 30px;
+    text-align: justify;
+    line-height: 1.3;
+}
