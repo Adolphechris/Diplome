@@ -80,7 +80,7 @@
             {{ student.pronoun }} WAS AWARDED THE DEGREE OF {{ student.programme }} WITH {{ student.qualification_class }} AT THE GRADUATION CEREMONY HELD IN LUSAKA.
         </div>
 
-        <!-- BLOC LÉGALISATION : 3 SCEAUX + SIGNATURE + QR CODE -->
+        <!-- BLOC LÉGALISATION : 4 ÉLÉMENTS SÉPARÉS (SIGNATURE, SCEAU BLEU HUMIDE, SCEAU SEC GAUFRÉ, CACHET ROUGE + QR) -->
         <table class="signatures-table">
             <tr>
                 <!-- COL 1 : Signature du Deputy Registrar -->
@@ -89,18 +89,19 @@
                     <span class="label-title">DEPUTY REGISTRAR(ACADEMIC)</span>
                 </td>
 
-                <!-- COL 2 : Sceau humide bleu + Sceau sec gaufré superposés -->
-                <td class="seal-col">
-                    <div class="seals-stack">
-                        <!-- Sceau principal humide bleu -->
-                        <img class="seal-wet-blue" src="{{ seal_wet_path }}" alt="University Seal – Blue Ink">
-                        <!-- Sceau sec gaufré en superposition (légèrement décalé) -->
-                        <img class="seal-dry" src="{{ seal_dry_path }}" alt="University Dry Seal">
-                    </div>
-                    <span class="label-title">UNIVERSITY SEAL</span>
+                <!-- COL 2 : Sceau principal humide bleu vif Facebook (distinct) -->
+                <td class="seal-wet-col">
+                    <img class="seal-wet-blue" src="{{ seal_wet_path }}" alt="University Seal – Facebook Blue Ink"><br>
+                    <span class="label-title">OFFICIAL WET SEAL</span>
                 </td>
 
-                <!-- COL 3 : Cachet date rouge + QR Code -->
+                <!-- COL 3 : Sceau sec gaufré (distinct, à côté et non superposé) -->
+                <td class="seal-dry-col">
+                    <img class="seal-dry" src="{{ seal_dry_path }}" alt="University Dry Seal"><br>
+                    <span class="label-title">EMBOSSED DRY SEAL</span>
+                </td>
+
+                <!-- COL 4 : Cachet date rouge + QR Code -->
                 <td class="qr-col">
                     <img class="seal-date-red" src="{{ seal_date_path }}" alt="Date Stamp"><br>
                     <img class="qr-img" src="{{ qr_data_uri }}" alt="Verification QR Code"><br>

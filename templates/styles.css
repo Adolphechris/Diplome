@@ -221,61 +221,47 @@ body {
     text-align: center;
 }
 
-.sig-col  { width: 30%; text-align: left;   vertical-align: bottom; }
-.seal-col { width: 38%; text-align: center;  vertical-align: bottom; }
-.qr-col   { width: 32%; text-align: right;   vertical-align: bottom; }
+.sig-col      { width: 26%; text-align: left;   vertical-align: bottom; }
+.seal-wet-col { width: 25%; text-align: center; vertical-align: bottom; }
+.seal-dry-col { width: 23%; text-align: center; vertical-align: bottom; }
+.qr-col       { width: 26%; text-align: right;  vertical-align: bottom; }
 
 .sig-img {
-    height: 42px;
+    height: 48px;
     margin-bottom: 2px;
 }
 
-/* Stack de sceaux superposés */
-.seals-stack {
-    position: relative;
-    display: inline-block;
-    width: 130px;
-    height: 110px;
-    margin-bottom: 2px;
-}
-
-/* Sceau humide bleu — principal, centré */
+/* Sceau humide bleu vif Facebook */
 .seal-wet-blue {
-    position: absolute;
-    width: 120px;
-    height: 100px;
-    top: 5px;
-    left: 5px;
+    width: 110px;
+    height: 85px;
     object-fit: contain;
-    opacity: 0.88;
+    margin-bottom: 2px;
 }
 
-/* Sceau sec gaufré — légèrement décalé en haut à droite */
+/* Sceau sec gaufré en relief distinct */
 .seal-dry {
-    position: absolute;
-    width: 90px;
-    height: 90px;
-    top: -8px;
-    left: 42px;
+    width: 85px;
+    height: 85px;
     object-fit: contain;
-    opacity: 0.55;
+    margin-bottom: 2px;
 }
 
 /* Cachet date rouge */
 .seal-date-red {
-    width: 130px;
+    width: 115px;
     height: auto;
-    margin-bottom: 5px;
-    opacity: 0.90;
+    margin-bottom: 4px;
+    opacity: 0.95;
 }
 
 .qr-img {
-    width: 80px;
-    height: 80px;
+    width: 75px;
+    height: 75px;
 }
 
 .label-title {
-    font-size: 7.5pt;
+    font-size: 7pt;
     font-weight: bold;
     border-top: 1pt solid #000;
     padding-top: 2px;
@@ -284,7 +270,7 @@ body {
 }
 
 .sha-text {
-    font-size: 6pt;
+    font-size: 5.5pt;
     font-family: "Courier New", monospace;
     color: #444444;
     margin-top: 2px;
